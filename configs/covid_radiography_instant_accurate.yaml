@@ -1,0 +1,57 @@
+# INSTANT-ACCURATE sanity config. Still fast (a few minutes on CPU), but with
+# the settings that were actively strangling accuracy relaxed:
+#   - More data (200/class instead of 60/class)
+#   - More rounds and local epochs (8 rounds x 2 epochs instead of 3 x 1)
+#   - Much less DP noise (target_epsilon 8.0 instead of 3.0 - weaker privacy,
+#     but 22% accuracy with a broken model isn't useful to anyone either)
+#   - Much less aggressive compression (top_k_ratio 0.5 instead of 0.2)
+#
+# Still NOT your final reported research numbers (different backbone/data
+# volume than covid_radiography_research.yaml, and a looser privacy budget
+# than your intended 3.0). Use this to sanity-check the pipeline end-to-end
+# with a real, meaningfully-trained model. Run the full research config
+# separately for your actual reported accuracy + privacy guarantee.
+
+experiment_name: "covid_radiography_instant_accurate"
+seed: 42
+
+dataset:
+  num_classes: 4
+  classes: ["Normal", "Lung_Opacity", "Viral Pneumonia", "COVID"]
+  image_size: 128
+  dirichlet_alpha: 0.5
+  max_samples_per_class: 300   # ~1200 images total
+  # EDIT THIS to the path of your extracted COVID-19_Radiography_Dataset folder
+  data_dir: "C:/Users/meghana/OneDrive/Desktop/major project/project/data/COVID-19_Radiography_Dataset"
+
+federated:
+  num_hospitals: 4
+  hospital_names: ["Hospital_A_Metropolitan", "Hospital_B_Regional", "Hospital_C_University", "Hospital_D_Community"]
+  num_rounds: 12
+  local_epochs: 2
+  batch_size: 16
+  lr: 0.001
+  mu_prox: 0.01
+
+model:
+  backbone: "resnet18"
+  pretrained: true
+  num_classes: 4
+  dropout: 0.3
+
+privacy:
+  enabled: true
+  target_epsilon: 8.0        # relaxed from 3.0 - much less noise injected
+  target_delta: 0.0001
+  max_grad_norm: 1.0
+  noise_multiplier: 1.5      # relaxed from 0.6
+
+compression:
+  enabled: true
+  top_k_ratio: 0.4           # relaxed from 0.2 - keeps more of each update
+
+paths:
+  checkpoints_dir: "checkpoints"
+  results_dir: "results"
+  figures_dir: "figures"
+  reports_dir: "reports"

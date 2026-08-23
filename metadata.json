@@ -1,0 +1,6 @@
+{
+  "name": "Privacy-Preserving Federated Learning for Hospital Networks",
+  "description": "Communication-Efficient Federated Learning with Differential Privacy Guarantees on EfficientNet-B3 for Heterogeneous Multi-Hospital Disease Classification.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,51 @@
+# Quick REAL-DATA sanity config. Same EfficientNet-B3 + DP + Top-K pipeline as
+# covid_radiography_research.yaml, but capped to a fraction of the dataset and
+# fewer rounds, so you get a genuine (not fabricated) accuracy number in
+# roughly 15-20 minutes on CPU instead of several hours. Run the full
+# covid_radiography_research.yaml afterwards for your real reported numbers -
+# this config's accuracy will be lower just because it sees far less data and
+# trains for fewer rounds, not because anything is broken.
+
+experiment_name: "covid_radiography_quick"
+seed: 42
+
+dataset:
+  num_classes: 4
+  classes: ["Normal", "Lung_Opacity", "Viral Pneumonia", "COVID"]
+  image_size: 176
+  dirichlet_alpha: 0.3
+  max_samples_per_class: 400   # ~1600 images total instead of ~21000
+  # EDIT THIS to the path of your extracted COVID-19_Radiography_Dataset folder
+  data_dir: "C:/Users/meghana/OneDrive/Desktop/major project/project/data/COVID-19_Radiography_Dataset"
+
+federated:
+  num_hospitals: 4
+  hospital_names: ["Hospital_A_Metropolitan", "Hospital_B_Regional", "Hospital_C_University", "Hospital_D_Community"]
+  num_rounds: 10
+  local_epochs: 2
+  batch_size: 16
+  lr: 0.0005
+  mu_prox: 0.01
+
+model:
+  backbone: "efficientnet_b3"
+  pretrained: true
+  num_classes: 4
+  dropout: 0.3
+
+privacy:
+  enabled: true
+  target_epsilon: 3.0
+  target_delta: 0.0001
+  max_grad_norm: 1.0
+  noise_multiplier: 1.5
+
+compression:
+  enabled: true
+  top_k_ratio: 0.20
+
+paths:
+  checkpoints_dir: "checkpoints"
+  results_dir: "results"
+  figures_dir: "figures"
+  reports_dir: "reports"

@@ -1,0 +1,46 @@
+# Full research config for the real Kaggle "COVID-19 Radiography Database"
+# (4 classes: Normal, Lung_Opacity, Viral Pneumonia, COVID).
+# 40-round EfficientNet-B3 federated training run with DP + Top-K compression.
+
+experiment_name: "covid_radiography_research"
+seed: 42
+
+dataset:
+  num_classes: 4
+  classes: ["Normal", "Lung_Opacity", "Viral Pneumonia", "COVID"]
+  image_size: 224
+  dirichlet_alpha: 0.3
+  # EDIT THIS to the path of your extracted COVID-19_Radiography_Dataset folder
+  data_dir: "C:/Users/meghana/OneDrive/Desktop/major project/project/data/COVID-19_Radiography_Dataset"
+
+federated:
+  num_hospitals: 4
+  hospital_names: ["Hospital_A_Metropolitan", "Hospital_B_Regional", "Hospital_C_University", "Hospital_D_Community"]
+  num_rounds: 40
+  local_epochs: 3
+  batch_size: 16
+  lr: 0.0005
+  mu_prox: 0.01
+
+model:
+  backbone: "efficientnet_b3"
+  pretrained: true
+  num_classes: 4
+  dropout: 0.3
+
+privacy:
+  enabled: true
+  target_epsilon: 3.0
+  target_delta: 0.0001
+  max_grad_norm: 1.0
+  noise_multiplier: 1.5
+
+compression:
+  enabled: true
+  top_k_ratio: 0.20
+
+paths:
+  checkpoints_dir: "checkpoints"
+  results_dir: "results"
+  figures_dir: "figures"
+  reports_dir: "reports"

@@ -1,0 +1,47 @@
+# Quick smoke-test config for the real Kaggle "COVID-19 Radiography Database"
+# (4 classes: Normal, Lung_Opacity, Viral Pneumonia, COVID).
+# Runs 2 rounds on a small image size so you can confirm everything works
+# end-to-end before committing to the full research run.
+
+experiment_name: "covid_radiography_fast"
+seed: 42
+
+dataset:
+  num_classes: 4
+  classes: ["Normal", "Lung_Opacity", "Viral Pneumonia", "COVID"]
+  image_size: 64
+  dirichlet_alpha: 0.5
+  # EDIT THIS to the path of your extracted COVID-19_Radiography_Dataset folder
+  data_dir: "C:/Users/meghana/OneDrive/Desktop/major project/project/data/COVID-19_Radiography_Dataset"
+
+federated:
+  num_hospitals: 4
+  hospital_names: ["Hospital_A", "Hospital_B", "Hospital_C", "Hospital_D"]
+  num_rounds: 2
+  local_epochs: 1
+  batch_size: 16
+  lr: 0.001
+  mu_prox: 0.01
+
+model:
+  backbone: "resnet18"
+  pretrained: false
+  num_classes: 4
+  dropout: 0.1
+
+privacy:
+  enabled: true
+  target_epsilon: 5.0
+  target_delta: 0.001
+  max_grad_norm: 1.0
+  noise_multiplier: 1.5
+
+compression:
+  enabled: true
+  top_k_ratio: 0.30
+
+paths:
+  checkpoints_dir: "checkpoints"
+  results_dir: "results"
+  figures_dir: "figures"
+  reports_dir: "reports"

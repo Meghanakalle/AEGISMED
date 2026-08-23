@@ -1,0 +1,57 @@
+# INSTANT sanity config. NOT for real reported results.
+#
+# Uses ResNet-18 (much faster on CPU than EfficientNet-B3) and a tiny slice of
+# data so the *entire* pipeline - proposed/fast run, ablation study (5
+# variants), and non-IID alpha study (4 variants) - finishes in a few minutes
+# total, giving you real numbers end-to-end instead of a multi-hour wait.
+#
+# Because it uses a different (smaller, faster) backbone and ~10x less data
+# than covid_radiography_research.yaml, its accuracy numbers are NOT
+# comparable to your real research results - use this only to confirm the
+# whole pipeline works and see every dashboard tab populated with genuine
+# (if low-data) numbers. Run covid_radiography_research.yaml separately for
+# your actual reported accuracy.
+
+experiment_name: "covid_radiography_instant"
+seed: 42
+
+dataset:
+  num_classes: 4
+  classes: ["Normal", "Lung_Opacity", "Viral Pneumonia", "COVID"]
+  image_size: 96
+  dirichlet_alpha: 0.5
+  max_samples_per_class: 120   # ~480 images total
+  # EDIT THIS to the path of your extracted COVID-19_Radiography_Dataset folder
+  data_dir: "C:/Users/meghana/OneDrive/Desktop/major project/project/data/COVID-19_Radiography_Dataset"
+
+federated:
+  num_hospitals: 4
+  hospital_names: ["Hospital_A_Metropolitan", "Hospital_B_Regional", "Hospital_C_University", "Hospital_D_Community"]
+  num_rounds: 8
+  local_epochs: 2
+  batch_size: 16
+  lr: 0.001
+  mu_prox: 0.01
+
+model:
+  backbone: "resnet18"
+  pretrained: true
+  num_classes: 4
+  dropout: 0.3
+
+privacy:
+  enabled: true
+  target_epsilon: 3.0
+  target_delta: 0.0001
+  max_grad_norm: 1.0
+  noise_multiplier: 1.5
+
+compression:
+  enabled: true
+  top_k_ratio: 0.40
+
+paths:
+  checkpoints_dir: "checkpoints"
+  results_dir: "results"
+  figures_dir: "figures"
+  reports_dir: "reports"

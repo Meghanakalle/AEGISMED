@@ -1,0 +1,45 @@
+experiment_name: "fast_validation"
+seed: 42
+
+dataset:
+  num_classes: 4
+  classes: ["Normal", "Lung_Opacity", "Viral Pneumonia", "COVID"]
+  image_size: 64
+  synthetic_samples: 120
+  dirichlet_alpha: 0.5
+  # Set this to a folder path to use a real dataset instead of synthetic images.
+  # Expected layout: data_dir/Normal/*.png, data_dir/Pneumonia/*.png, data_dir/COVID-19/*.png
+  # Leave as null (or omit) to keep using synthetic data.
+  data_dir: null
+
+federated:
+  num_hospitals: 4
+  hospital_names: ["Hospital_A", "Hospital_B", "Hospital_C", "Hospital_D"]
+  num_rounds: 2
+  local_epochs: 1
+  batch_size: 8
+  lr: 0.001
+  mu_prox: 0.01
+
+model:
+  backbone: "resnet18"
+  pretrained: false
+  num_classes: 4
+  dropout: 0.1
+
+privacy:
+  enabled: true
+  target_epsilon: 5.0
+  target_delta: 0.001
+  max_grad_norm: 1.0
+  noise_multiplier: 1.5
+
+compression:
+  enabled: true
+  top_k_ratio: 0.30
+
+paths:
+  checkpoints_dir: "checkpoints"
+  results_dir: "results"
+  figures_dir: "figures"
+  reports_dir: "reports"
