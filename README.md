@@ -12,6 +12,7 @@ This project contains both:
 - Click **Settings** (gear icon) in the top right of the AI Studio interface.
 - Click **Export Project** or **Download ZIP**.
 - Extract the ZIP archive onto your local machine.
+- Download the datasets from this link -- https://www.kaggle.com/datasets/tawsifurrahman/covid19-radiography-database
 
 ---
 
