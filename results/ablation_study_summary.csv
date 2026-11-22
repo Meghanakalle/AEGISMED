@@ -1,0 +1,6 @@
+Variant,Test Accuracy (%),ROC-AUC,Epsilon,Comm Reduction (%)
+FedAvg_Base,89.38,0.9901,0.000,0.0
+FedProx_Only,90.62,0.9910,0.000,0.0
+FedAvg_DP_Only,93.13,0.9921,2.527,0.0
+FedAvg_TopK_Only,90.62,0.9902,0.000,30.0
+Proposed_FedProx_DP_TopK,92.08,0.9925,2.527,30.0

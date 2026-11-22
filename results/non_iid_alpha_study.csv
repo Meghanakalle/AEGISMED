@@ -1,0 +1,5 @@
+Dirichlet Alpha (alpha),Heterogeneity Level,Final Test Acc (%),Final Loss,ROC-AUC
+0.1,Extreme,82.08,0.6297,0.9212
+0.3,Moderate,85.5,0.8669,0.8707
+0.8,Mild,89.17,0.5056,0.9478
+10.0,Near-IID,91.08,0.5346,0.9521

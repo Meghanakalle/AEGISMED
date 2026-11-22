@@ -1,0 +1,5 @@
+hospital_id,hospital_name,sample_count,Normal,Lung_Opacity,Viral Pneumonia,COVID
+0,Hospital_A_Metropolitan,244,155,89,0,0
+1,Hospital_B_Regional,658,171,258,183,46
+2,Hospital_C_University,564,104,14,29,417
+3,Hospital_D_Community,262,1,47,213,1
